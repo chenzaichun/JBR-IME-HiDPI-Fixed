@@ -164,10 +164,10 @@ index bb955dc5089..7c42e2aa685 100644
       * Activates the current input method of this input context, and grabs
       * the composition area for use by this input context.
 diff --git a/src/java.desktop/unix/classes/sun/awt/X11/XInputMethod.java b/src/java.desktop/unix/classes/sun/awt/X11/XInputMethod.java
-index 4244812ceb0..f2fa4a0684c 100644
+index 4244812ceb0..e1e8eff44d3 100644
 --- a/src/java.desktop/unix/classes/sun/awt/X11/XInputMethod.java
 +++ b/src/java.desktop/unix/classes/sun/awt/X11/XInputMethod.java
-@@ -28,12 +28,25 @@ package sun.awt.X11;
+@@ -28,12 +28,26 @@ package sun.awt.X11;
  import java.awt.AWTException;
  import java.awt.Component;
  import java.awt.Container;
@@ -177,6 +177,7 @@ index 4244812ceb0..f2fa4a0684c 100644
  import java.awt.Rectangle;
  import java.awt.im.spi.InputMethodContext;
  import java.awt.peer.ComponentPeer;
++import java.awt.GraphicsDevice;
 +import java.awt.GraphicsEnvironment;
 +
 +import java.lang.reflect.Field;
@@ -193,16 +194,21 @@ index 4244812ceb0..f2fa4a0684c 100644
  
  import sun.util.logging.PlatformLogger;
  
-@@ -45,6 +58,8 @@ import sun.util.logging.PlatformLogger;
+@@ -45,8 +59,13 @@ import sun.util.logging.PlatformLogger;
  public class XInputMethod extends X11InputMethod {
      private static final PlatformLogger log = PlatformLogger.getLogger("sun.awt.X11.XInputMethod");
  
-+    private int scale = ((X11GraphicsDevice)GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()).getScaleFactor();
++    private int scale = -1;
 +
      public XInputMethod() throws AWTException {
          super();
++        GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
++        if (device instanceof X11GraphicsDevice)
++            scale = ((X11GraphicsDevice) device).getScaleFactor();
      }
-@@ -86,15 +101,29 @@ public class XInputMethod extends X11InputMethod {
+ 
+     public void setInputMethodContext(InputMethodContext context) {
+@@ -86,15 +105,29 @@ public class XInputMethod extends X11InputMethod {
  
      private static volatile long xicFocus = 0;
  
@@ -233,7 +239,7 @@ index 4244812ceb0..f2fa4a0684c 100644
      }
  
      public static long getXICFocus() {
-@@ -133,6 +162,74 @@ public class XInputMethod extends X11InputMethod {
+@@ -133,6 +166,74 @@ public class XInputMethod extends X11InputMethod {
          return null;
      }
  
@@ -308,7 +314,7 @@ index 4244812ceb0..f2fa4a0684c 100644
      /*
       * Subclasses should override disposeImpl() instead of dispose(). Client
       * code should always invoke dispose(), never disposeImpl().
-@@ -253,6 +350,6 @@ public class XInputMethod extends X11InputMethod {
+@@ -253,6 +354,6 @@ public class XInputMethod extends X11InputMethod {
      private native boolean recreateXICNative(long window, long px11data, int ctxid);
      private native int releaseXICNative(long px11data);
      private native void setXICFocusNative(long window,
