@@ -104,6 +104,8 @@ jobs:
         jb/project/tools/linux/scripts/mkimages_x64.sh '${{ steps.vars.outputs.build_number }}' jcef
 
         echo "jbr_image=$(ls -1 jbr_jcef-*-linux-x64-*.tar.gz)" >> $GITHUB_OUTPUT
+        
+        echo "release_file_sha256=$(sha256sum jbr_jcef-*-linux-x64-*.tar.gz | cut -d ' ' -f 1)" >> $GITHUB_OUTPUT
 
     - name: Release
       run: |
@@ -117,5 +119,5 @@ jobs:
         
         find . -name 'jbr_jcef*.tar.gz' -exec cp {} jbr-release-directory/ \;
         
-        ./ghr -t "${{ github.token }}" -n "${{ steps.vars.outputs.release_name }}" "${{ steps.vars.outputs.tag_name }}" jbr-release-directory
+        ./ghr -t "${{ github.token }}" -b "sha256sum=${{ steps.compile.outputs.release_file_sha256 }}" -n "${{ steps.vars.outputs.release_name }}" "${{ steps.vars.outputs.tag_name }}" jbr-release-directory
 
