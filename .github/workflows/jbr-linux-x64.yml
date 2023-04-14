@@ -119,5 +119,5 @@ jobs:
         
         find . -name 'jbr_jcef*.tar.gz' -exec cp {} jbr-release-directory/ \;
         
-        ./ghr -t "${{ github.token }}" -b "sha256sum=${{ steps.compile.outputs.release_file_sha256 }}" -n "${{ steps.vars.outputs.release_name }}" "${{ steps.vars.outputs.tag_name }}" jbr-release-directory
+        ./ghr -t "${{ github.token }}" -b "SHA256: ${{ steps.compile.outputs.release_file_sha256 }}" -n "${{ steps.vars.outputs.release_name }}" "${{ steps.vars.outputs.tag_name }}" jbr-release-directory
 
