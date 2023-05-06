@@ -101,7 +101,7 @@ jobs:
 
         export BOOT_JDK="$JAVA_HOME_17_X64"
 
-        jb/project/tools/linux/scripts/mkimages_aarch64.sh '${{ steps.vars.outputs.build_number }}' jcef
+        jb/project/tools/linux/scripts/mkimages_aarch64.sh '${{ steps.vars.outputs.build_number }}' jcef aarch64
 
         echo "jbr_image=$(ls -1 jbr_jcef-*-linux-aarch64-*.tar.gz)" >> $GITHUB_OUTPUT
         
