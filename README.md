@@ -1,6 +1,8 @@
 # JBR-IME-HiDPI-Fixed
 
-修复JetBrains IDE在Linux平台下输入框不跟随光标的问题(HiDPI适用)
+2023年9月29日更新
 
-已知问题
-- 内置的终端内输入框不跟随光标
+官方已修复问题，见 https://youtrack.jetbrains.com/issue/JBR-2460/Wrong-position-of-input-window-and-no-input-preview-with-fcitx-and-ubuntu-13.04
+
+注意事项
+1. 设置变量 `XMODIFIERS=@im=fcitx` `GTK_IM_MODULE=fcitx`
