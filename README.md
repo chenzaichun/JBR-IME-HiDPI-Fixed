@@ -4,5 +4,10 @@
 
 官方已修复问题，见 https://youtrack.jetbrains.com/issue/JBR-2460/Wrong-position-of-input-window-and-no-input-preview-with-fcitx-and-ubuntu-13.04
 
-注意事项
+The bug has been fixed officially, see https://youtrack.jetbrains.com/issue/JBR-2460/Wrong-position-of-input-window-and-no-input-preview-with-fcitx-and-ubuntu-13.04
+
+**注意事项**
 1. 设置变量 `XMODIFIERS=@im=fcitx` `GTK_IM_MODULE=fcitx`
+
+**Attention**
+1. Remember to set the variable `XMODIFIERS=@im=fcitx` `GTK_IM_MODULE=fcitx`
