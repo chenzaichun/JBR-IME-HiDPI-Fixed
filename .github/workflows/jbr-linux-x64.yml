@@ -84,10 +84,10 @@ jobs:
         sudo apt-get clean -y
 
     - name: setup java
-      - uses: actions/setup-java@v4
-        with:
-          java-version: 19
-          distribution: 'temurin'
+      uses: actions/setup-java@v4
+      with:
+        java-version: 19
+        distribution: 'temurin'
 
     - name: Prepare JCEF
       run: |
