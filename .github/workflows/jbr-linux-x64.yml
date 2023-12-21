@@ -46,9 +46,16 @@ jobs:
         if [[ "$tag_name" == jbr17* ]]; then
           JBSDK_VERSION=$(sed -E 's/^jbr([0-9_.]+)b.*$/\1/' <<< "$tag_name")
           build_number=$(sed -E 's/^jbr[0-9_.]+b([0-9.]+)$/\1/' <<< "$tag_name")
+        elif [[ "$tag_name" == jbr21* ]]; then
+          JBSDK_VERSION=$(sed -E 's/^jbr([0-9_.]+)b.*$/\1/' <<< "$tag_name")
+          build_number=$(sed -E 's/^jbr[0-9_.]+b([0-9.]+)$/\1/' <<< "$tag_name")
         elif [[ "$tag_name" == jbr-release-17.* ]]; then
           JBSDK_VERSION=$(sed -E 's/^jbr-release-([0-9_.]+)b.*$/\1/' <<< "$tag_name")
           build_number=$(sed -E 's/^jbr-release-[0-9_.]+b([0-9.]+)$/\1/' <<< "$tag_name")
+        elif [[ "$tag_name" == jbr-release-21.* ]]; then
+          JBSDK_VERSION=$(sed -E 's/^jbr-release-([0-9_.]+)b.*$/\1/' <<< "$tag_name")
+          build_number=$(sed -E 's/^jbr-release-[0-9_.]+b([0-9.]+)$/\1/' <<< "$tag_name")
+
         else
           echo unknown tag name: $tag_name
           exit 1
@@ -75,6 +82,12 @@ jobs:
         echo update_initramfs=no | sudo tee /etc/initramfs-tools/update-initramfs.conf
         sudo apt-get install autoconf make build-essential libwayland-dev libx11-dev libxext-dev libxrender-dev libxtst-dev libxt-dev libxrandr-dev libcups2-dev libfontconfig1-dev libasound2-dev
         sudo apt-get clean -y
+
+    - name: setup java
+      - uses: actions/setup-java@v4
+        with:
+          java-version: 19
+          distribution: 'temurin'
 
     - name: Prepare JCEF
       run: |
