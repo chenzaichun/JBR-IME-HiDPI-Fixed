@@ -99,7 +99,7 @@ jobs:
         cd JetBrainsRuntime
         git log -1
 
-        patch -p1 < ../idea.patch
+        #patch -p1 < ../idea.patch
 
         mv ../jcef_linux_x64 ./
 
